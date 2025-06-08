@@ -1,0 +1,342 @@
+<mvc:View controllerName="project1.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+      xmlns:tnt="sap.tnt"
+	  xmlns:uitable="sap.ui.table"
+	  xmlns:unified="sap.ui.unified"
+	  	xmlns:core="sap.ui.core"
+		  xmlns:sap.ui.fl="sap.ui.fl"
+		  xmlns:vm="sap.ui.fl.variants"
+		  xmlns:sap.ui.dt="sap.ui.dt"
+	  	xmlns:m="sap.m"
+		  xmlns:f="sap.f"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+
+		<tnt:ToolPage id="toolPage">
+			<tnt:header>
+				<tnt:ToolHeader>
+					<Image height="1.5rem"
+						class="sapUiSmallMarginBegin"
+						src="https://www.sap.com/dam/application/shared/logos/sap-logo-svg.svg" />
+					<Title level="H1" text="SPS Commerce" wrapping="false" id="productName">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="Disappear"/>
+						</layoutData>
+					</Title>
+					<Text text="Fulfillment" wrapping="false" id="secondTitle">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="Disappear"/>
+						</layoutData>
+					</Text>
+					<ToolbarSpacer />
+					<SearchField width="25rem" id="searchField">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="Low" group="1"/>
+						</layoutData>
+					</SearchField>
+					<Button visible="false" icon="sap-icon://search" type="Transparent" id="searchButton" tooltip="Search"/>
+					<OverflowToolbarButton icon="sap-icon://source-code" type="Transparent" tooltip="Action 1" text="Action 1">
+						<layoutData>
+							<OverflowToolbarLayoutData group="2"/>
+						</layoutData>
+					</OverflowToolbarButton>
+					<OverflowToolbarButton icon="sap-icon://card" type="Transparent" tooltip="Action 2" text="Action 2">
+						<layoutData>
+							<OverflowToolbarLayoutData group="2"/>
+						</layoutData>
+					</OverflowToolbarButton>
+					<ToolbarSeparator>
+						<layoutData>
+							<OverflowToolbarLayoutData group="2"/>
+						</layoutData>
+					</ToolbarSeparator>
+					<OverflowToolbarButton icon="sap-icon://action-settings" type="Transparent" text="Settings"/>
+					<Button icon="sap-icon://bell" type="Transparent" tooltip="Notification">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow"/>
+						</layoutData>
+					</Button>
+					<tnt:ToolHeaderUtilitySeparator/>
+					<ToolbarSpacer width="1.125rem"/>
+					<Avatar src="test-resources/sap/tnt/images/Woman_avatar_01.png" displaySize="XS" tooltip="Profile">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow"/>
+						</layoutData>
+					</Avatar>
+				</tnt:ToolHeader>
+			</tnt:header>
+			<tnt:subHeader>
+				<tnt:ToolHeader>
+					<IconTabHeader
+							selectedKey="{/selectedKey}"
+							items="{path: '/navigation'}"
+							select=".onItemSelect"
+							mode="Inline">
+						<layoutData>
+							<OverflowToolbarLayoutData priority="NeverOverflow" shrinkable="true" />
+						</layoutData>
+						<items>
+							<IconTabFilter
+									items="{items}"
+									text="{title}"
+									key="{key}"
+									interactionMode="SelectLeavesOnly">
+								<items>
+									<IconTabFilter
+											text="{title}"
+											key="{key}">
+									</IconTabFilter>
+								</items>
+							</IconTabFilter>
+						</items>
+					</IconTabHeader>
+				</tnt:ToolHeader>
+			</tnt:subHeader>
+			<tnt:mainContents>
+
+
+
+
+
+
+		<f:SidePanel id="mySidePanel" toggle="onToggle" sidePanelPosition="Left" >
+			<f:mainContent>
+
+
+
+
+
+
+
+
+			
+				
+					<NavContainer id="pageContainer" initialPage="page1">
+						<pages>
+							<ScrollContainer
+								id="page1"
+								horizontal="false"
+								vertical="true"
+								height="100%"
+								class="sapUiContentPadding">
+								
+		
+		
+		
+		
+		
+		<VBox>
+			<HBox>
+
+				<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="All"  press="filterStatusAll" >
+					<TileContent  footer="All Partners">
+						<NumericContent value="{pomodel>/totalfinal}" icon="sap-icon://line-charts" withMargin="false" />
+					</TileContent>
+				</GenericTile>
+
+
+		<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout redcolor" header="Open" backgroundColor="#FF0000"  press="filterStatusOpen" >
+				<TileContent  footer="All Partners">
+					<NumericContent value="{pomodel>/open}" icon="sap-icon://line-charts" withMargin="false" />
+				</TileContent>
+			</GenericTile>
+		
+		<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout greencolor" header="Received" backgroundColor="#FF0000" press="filterStatusReceived" >
+				<TileContent  footer="All Partners">
+					<NumericContent value="{pomodel>/received}" icon="sap-icon://line-charts" withMargin="false" />
+				</TileContent>
+			</GenericTile>
+		
+			<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout embercolor" header="Invoiced" backgroundColor="#FF0000" press="filterStatusInvoiced" >
+				<TileContent  footer="New Order Changes">
+					<NumericContent value="{pomodel>/invoiced}" icon="sap-icon://line-charts" withMargin="false" />
+				</TileContent>
+			</GenericTile>
+		
+			<GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout" header="Deleted" backgroundColor="#FF0000" press="filterStatusDeleted"  >
+				<TileContent  footer="All Partners">
+					<NumericContent value="{pomodel>/deleted}" icon="sap-icon://line-charts" withMargin="false" />
+				</TileContent>
+			</GenericTile>
+		
+			<!-- <GenericTile class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout greencolor" header="Auto Send Errors" backgroundColor="#FF0000" >
+				<TileContent  footer="All Partners">
+					<NumericContent value="1762" icon="sap-icon://line-charts" withMargin="false" />
+				</TileContent>
+			</GenericTile> -->
+		
+		</HBox>
+			<uitable:Table class="sapUiLargeMarginTop"
+							id="table"
+							rows="{pomodel>/poinfo}"
+							selectionMode="MultiToggle"
+							ariaLabelledBy="title">
+						<uitable:extension>
+							<m:OverflowToolbar style="Clear">
+								<m:Title id="title" text="Purchase Orders ({pomodel>/total})"/>
+
+								<vm:VariantManagement id="p13nVm" for="persoTable"/>
+								
+								<m:SearchField search="searchFilter" width="250px"/>
+								<m:ToolbarSpacer/>
+								<m:Button icon="sap-icon://action-settings" press="openPersoDialog"/>
+							</m:OverflowToolbar>
+						</uitable:extension>
+						<uitable:rowSettingsTemplate>
+							<uitable:RowSettings highlight="{Status}" highlightText="{StatusText}"/>
+						</uitable:rowSettingsTemplate>
+						<uitable:columns>
+		
+		
+						<uitable:Column sortProperty="eindt" filterProperty="eindt">
+								<m:Label text="Delivery Date"/>
+								<uitable:template>
+									<m:Text text="{pomodel>eindt}" wrapping="false"/>
+								</uitable:template>
+							</uitable:Column>
+		
+		
+		
+							<uitable:Column sortProperty="ebeln" filterProperty="ebeln">
+								<m:Label text="PO Number"/>
+								<uitable:template>
+									<m:Text text="{pomodel>ebeln}" wrapping="false"/>
+								</uitable:template>
+							</uitable:Column>
+		
+		
+							<uitable:Column sortProperty="grstatus" filterProperty="grstatus">
+								<m:Label text="Status"/>
+								<uitable:template>
+									<m:Text text="{pomodel>grstatus}" wrapping="false"/>
+								</uitable:template>
+							</uitable:Column>
+							
+							
+		
+							<uitable:Column sortProperty="lineitems" filterProperty="lineitems">
+								<m:Label text="Items"/>
+								<uitable:template>
+									<m:Text text="{pomodel>lineitems}" wrapping="false"/>
+								</uitable:template>
+							</uitable:Column>
+		
+		
+							<uitable:Column sortProperty="name1" filterProperty="name1">
+								<m:Label text="Vendor"/>
+								<uitable:template>
+									<m:Text text="{pomodel>name1}" wrapping="false"/>
+								</uitable:template>
+							</uitable:Column>
+		
+						
+		
+							
+						</uitable:columns>
+					</uitable:Table>
+		
+		</VBox>
+		
+		
+
+		
+		
+		
+		
+		
+							</ScrollContainer>
+							<ScrollContainer
+								id="page2"
+								horizontal="false"
+								vertical="true"
+								height="100%"
+								class="sapUiContentPadding">
+								<Text text="Applications" />
+							</ScrollContainer>
+							<ScrollContainer
+								id="page3"
+								horizontal="false"
+								vertical="true"
+								height="100%"
+								class="sapUiContentPadding">
+								<Text text="Users and Groups" />
+							</ScrollContainer>
+							<ScrollContainer
+								id="page4"
+								horizontal="false"
+								vertical="true"
+								height="100%"
+								class="sapUiContentPadding">
+								<Text text="Identity" />
+							</ScrollContainer>
+							<ScrollContainer
+									id="page5"
+									horizontal="false"
+									vertical="true"
+									height="100%"
+									class="sapUiContentPadding">
+								<Text text="Provisioning" />
+							</ScrollContainer>
+							<ScrollContainer
+									id="page6"
+									horizontal="false"
+									vertical="true"
+									height="100%"
+									class="sapUiContentPadding">
+								<Text text="Monitoring" />
+							</ScrollContainer>
+							<ScrollContainer
+									id="page7"
+									horizontal="false"
+									vertical="true"
+									height="100%"
+									class="sapUiContentPadding">
+								<Text text="Resources" />
+							</ScrollContainer>
+						</pages>
+					</NavContainer>
+
+
+				</f:mainContent>
+				<f:items>
+					<f:SidePanelItem icon="sap-icon://add-filter" text="Run">
+						<VBox>
+							<Text text="Change Date" class="" />
+							<m:DatePicker dateValue="" id="podate"></m:DatePicker>
+							<Text text="Change Sales Org" class="sapUiSmallMarginTop" />
+							<m:Input placeholder="Select Sales Org" id="salesorg"></m:Input>
+							<Button text="Filter" press="onFilter"/>
+						</VBox>
+					</f:SidePanelItem>	
+					<f:SidePanelItem icon="sap-icon://addresses" text="Go home">
+						<VBox>
+							<Text text="Static Content" class="sapUiSmallMarginBottom" />
+							<Button text="Press me" />
+							<Button text="Hit me" />
+							<Button text="Touch me" />
+						</VBox>
+					</f:SidePanelItem>
+					<f:SidePanelItem icon="sap-icon://building" text="Go to office" />
+					<f:SidePanelItem icon="sap-icon://flight" text="Fly abroad" enabled="false" />
+				</f:items>
+			</f:SidePanel>
+				</tnt:mainContents>
+			</tnt:ToolPage>
+
+
+
+
+
+
+					
+
+
+
+
+
+
+
+
+      
+    </Page>
+</mvc:View>

@@ -1,0 +1,22 @@
+{
+	"selectedKey": "page1",
+	"navigation": [
+		{
+			"title": "Dashboard",
+			"key": "page1"
+		},
+		{
+			"title": "Transactions",
+			"key": "page2"
+		},
+		{
+			"title": "Settings",
+			"key": "page2"
+		},
+		{
+			"title": "Item Sourcing",
+			"key": "page2"
+		}
+		
+	]
+}
