@@ -1,0 +1,38 @@
+<mvc:View
+	controllerName="project1.controller.Login"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0"
+>
+
+ <Page id="page" title="SPS Commerce">
+    <content>
+                        <VBox height="100%" alignItems="Center">
+                            
+                            <HBox height="100%" alignItems="Center">
+                                <Image height="100px" class="sapUiLargeMarginEnd"
+                                    src="https://porky.com/assets/images/logo.png"/>
+                                <IconTabBar id="idIconTabBarNoIcons" expanded="{device>/isNoPhone}" selectedKey="mail" class="sapUiResponsiveContentPadding">
+                                    <items>
+                                        <IconTabFilter text="Email Login" key="mail">
+                                            <VBox id="idMailDetails">
+                                                <Label design="Bold" text="Enter Registered Email ID" required="true"/>
+                                                <Input width="300px" id="idu_admin" required="true" placeholder="username@mail.com" submit="onEmailSignin"/>
+                                                <Label design="Bold" text="Enter Password" required="true"/>
+                                                <Input width="300px" id="idp_admin" required="true" type="Password" placeholder="*****" submit="onEmailSignin"/>
+                                                <HBox>
+                                                    <Button width="145px" class="sapUiTinyMarginEnd" text="Sign In" press="onEmailSignin"/>
+                                                    <Button width="145px" text="Reset" press="onReset"/>
+                                                </HBox>
+                                            </VBox>
+                                        </IconTabFilter>
+                                    </items>
+                                </IconTabBar>
+                            </HBox>
+                        </VBox>
+                    </content>
+ </Page>
+</mvc:View>

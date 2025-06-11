@@ -194,6 +194,14 @@
 									<m:Text text="{pomodel>eindt}" wrapping="false"/>
 								</uitable:template>
 							</uitable:Column>
+
+
+													<uitable:Column sortProperty="datvr" filterProperty="datvr">
+								<m:Label text="Printed Date"/>
+								<uitable:template>
+									<m:Text text="{pomodel>datvr}" wrapping="false"/>
+								</uitable:template>
+							</uitable:Column>
 		
 		
 		
@@ -226,6 +234,13 @@
 								<m:Label text="Vendor"/>
 								<uitable:template>
 									<m:Text text="{pomodel>name1}" wrapping="false"/>
+								</uitable:template>
+							</uitable:Column>
+
+								<uitable:Column sortProperty="zg05name" filterProperty="zg05name">
+								<m:Label text="Receiver Name"/>
+								<uitable:template>
+									<m:Text text="{pomodel>zg05name}" wrapping="false"/>
 								</uitable:template>
 							</uitable:Column>
 		
@@ -302,7 +317,12 @@
 					<f:SidePanelItem icon="sap-icon://add-filter" text="Run">
 						<VBox>
 							<Text text="Change Date" class="" />
-							<m:DatePicker dateValue="" id="podate"></m:DatePicker>
+								<DynamicDateRange
+						placeholder="Choose date range"
+						id="podate"
+						change="onChange"
+						width="{env>/filterInputWidth}"/>
+							<!-- <m:DatePicker dateValue="" id="podate"></m:DatePicker> -->
 							<Text text="Change Sales Org" class="sapUiSmallMarginTop" />
 							<m:Input placeholder="Select Sales Org" id="salesorg"></m:Input>
 							<Button text="Filter" press="onFilter"/>

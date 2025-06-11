@@ -51,6 +51,9 @@
         "settings": {
           "bundleName": "project1.i18n.i18n"
         }
+      },
+      "loginModel": {
+        "type": "sap.ui.model.json.JSONModel"
       }
     },
     "resources": {
@@ -74,17 +77,28 @@
       },
       "routes": [
         {
-          "name": "RouteView1",
+          "name": "Login",
           "pattern": ":?query:",
           "target": [
-            "TargetView1"
+            "Login"
+          ]
+        },
+        {
+          "name": "View1",
+          "pattern": "View1",
+          "target": [
+            "View1"
           ]
         }
       ],
       "targets": {
-        "TargetView1": {
+        "View1": {
           "id": "View1",
           "name": "View1"
+        },
+         "Login": {
+          "id": "Login",
+          "name": "Login"
         }
       }
     },

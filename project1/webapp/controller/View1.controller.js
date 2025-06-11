@@ -4,8 +4,9 @@ sap.ui.define([
 	"sap/ui/Device",
 	"sap/m/MessageToast",
     "sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], (Controller, JSONModel, Device, MessageToast,Filter,FilterOperator) => {
+	"sap/ui/model/FilterOperator",
+    "sap/m/MessageBox"
+], (Controller, JSONModel, Device, MessageToast,Filter,FilterOperator,MessageBox) => {
     "use strict";
 
     return Controller.extend("project1.controller.View1", {
@@ -48,7 +49,30 @@ sap.ui.define([
     var sFormattedDate = oDateFormat.format(new Date());
             this.date = sFormattedDate;
             this.fetchPOs();
+
+
+
+             var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        oRouter.getRoute("View1").attachMatched(this._onRouteMatched, this);
 		},
+        _onRouteMatched: function(oEvent){
+
+     //     var loggedinStatus =   this.getOwnerComponent().getModel("loginModel").getProperty("/isLogggedIn");
+          if(document.cookie.includes("isloggedin:true")){
+
+
+          }else{
+              MessageBox.error("Unauthorized Access");
+              var oRouter = this.getOwnerComponent().getRouter();
+                oRouter.navTo("Login");
+                return;
+          }
+        //   if(!loggedinStatus){
+        //     MessageBox.error("Unauthorized Access");
+        //       var oRouter = this.getOwnerComponent().getRouter();
+        //         oRouter.navTo("Login");
+        //   }
+        },
 
 		onItemSelect: function (oEvent) {
 			var oItem = oEvent.getParameter("item");
@@ -156,7 +180,7 @@ sap.ui.define([
                     console.log(that.xhr);
                     console.log(res);
                     // debugger;
-                    sap.m.MessageBox.show("Request submitted successfully");
+               //     sap.m.MessageBox.show("Request submitted successfully");
                 }
             };
             var data = { "Werks":this.salesorg, "Eindt":this.date, "Status":this.status}
@@ -164,9 +188,87 @@ sap.ui.define([
             xhr.send(JSON.stringify(data));
         },
 
+
+
+
+
+
+
+
+
+
+        fetchPOsRange: function(){
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://api.porky.com/sap/ZWS_PO_BAPI/ZBAPI_POZbapiWhs', true);
+
+            if(window.location.href.includes("DE2") || window.location.href.includes("de2")){
+                xhr.setRequestHeader('X-PORKY-SYSID', 'DE2');
+            }else if(window.location.href.includes("QA2") || window.location.href.includes("qa2")){
+                xhr.setRequestHeader('X-PORKY-SYSID', 'QA2');
+            }else{
+            xhr.setRequestHeader('X-PORKY-SYSID', 'PRD');
+            }
+            xhr.setRequestHeader('X-PORKY-AUTH', 'cm1lbGxveTpsdWNreW1l');
+            xhr.withCredentials = true;
+            xhr.setRequestHeader('X-PORKY-APPID', 'PO');
+            xhr.setRequestHeader('X-PORKY-APIKEY', '6bb0b04a-0466-490e-a8a5-53278b3df025');
+            xhr.setRequestHeader('Authorization', 'Basic cm1lbGxveTpsdWNreW1l');
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
+            var that = this;
+            this.xhr = xhr;
+            xhr.onload = function (e) {
+                // do something to response
+                //   console.log(that.xhr);
+            //     console.log("Success -" + this.responseText);
+            //  //   that.getView().byId("page").setTitle(this.responseText);
+            //     that.getView().setModel(new sap.ui.model.json.JSONModel(
+            //         JSON.parse(this.responseText)
+            //     ), "orderInfoModel");
+            debugger;
+
+            };
+            xhr.onreadystatechange = function () {
+                  that.getView().byId("table").setBusy(false);
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                
+                    
+
+                    var res = JSON.parse(xhr.response);
+
+                    that.responseOrg = JSON.parse(xhr.response);
+
+                    res.open = res.poinfo.filter(obj => obj.grstatus === 'Open').length;
+                    res.received = res.poinfo.filter(obj => obj.grstatus === 'Received').length;
+                    res.invoiced = res.poinfo.filter(obj => obj.grstatus === 'Invoiced').length;
+                    res.deleted = res.poinfo.filter(obj => obj.grstatus === 'Deleted').length;
+  res.total = res.poinfo.length;
+  res.totalfinal = that.responseOrg.poinfo.length;
+
+                             that.getView().setModel(new sap.ui.model.json.JSONModel(
+                    res
+                ), "pomodel");
+                    console.log(that.xhr);
+                    console.log(res);
+                    // debugger;
+               //     sap.m.MessageBox.show("Request submitted successfully");
+                }
+            };
+            var data = { "Werks":this.salesorg, "DeliverydateT":this.daterange, "Status":this.status}
+             that.getView().byId("table").setBusy(true);
+            xhr.send(JSON.stringify(data));
+        },
+
+
+
+
+
+
+
+
         sendXREFReqNote: function () {
 
-            debugger;
+    //        debugger;
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://api.porky.com/sap/zws_oent/ZBAPI_OENTZmmOdataent', true);
 
@@ -212,22 +314,93 @@ sap.ui.define([
             xhr.send(JSON.stringify(data));
         },
 
+
+
+
+
+
         onFilter: function(){
 
+            debugger;
             this.salesorg = this.getView().byId("salesorg").getValue();
+
+            var datelow, datehigh;
 
             if(this.salesorg === "" || typeof this.salesorg === 'undefined'){
                 this.salesorg = "3000";
             }
 
-       var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
+            this.status ="A";
+
+
+             var oDateFormat = sap.ui.core.format.DateFormat.getDateInstance({
         pattern: "MMddyyyy"
     });
-    var sFormattedDate = oDateFormat.format(this.getView().byId("podate").getDateValue());
-            this.date = sFormattedDate;
-            this.status ="A";
-            this.fetchPOs();
+
+    if(!this.getView().byId("podate")._oInput.getValue().includes("-") && !this.getView().byId("podate")._oInput.getValue().includes(")") ){
+
+         var singledate = new Date(this.getView().byId("podate")._oInput.getValue());
+
+           
+             this.date =  oDateFormat.format(singledate);
+             this.status = "A";
+             this.fetchPOs();
+        return;
+    }
+
+    if(this.getView().byId("podate")._oInput.getValue().split("(").length === 1  && 
+	  this.getView().byId("podate")._oInput.getValue().split("-").length === 2){
+
+        datelow = new Date(this.getView().byId("podate")._oInput.getValue().split("-")[0]);
+                datehigh = new Date(this.getView().byId("podate")._oInput.getValue().split("-")[1]);
+                 this.daterange = [{
+                     "High": oDateFormat.format(datehigh),
+      "Low": oDateFormat.format(datelow),
+      "Sign": "I",
+      "Option": "BT"
+                 }];
+
+   this.fetchPOsRange();
+    }else{
+
+            if(this.getView().byId("podate")._oInput.getValue().split("(").length >1 && this.getView().byId("podate")._oInput.getValue().split("(")[1].split(")")[0].includes("–")){ 
+
+                datelow = new Date(this.getView().byId("podate")._oInput.getValue().split("(")[1].split(")")[0].split("–")[0]);
+                datehigh = new Date(this.getView().byId("podate")._oInput.getValue().split("(")[1].split(")")[0].split("–")[1]);
+                 this.daterange = [{
+                     "High": oDateFormat.format(datehigh),
+      "Low": oDateFormat.format(datelow),
+      "Sign": "I",
+      "Option": "BT"
+                 }];
+ this.status = "A";
+   this.fetchPOsRange();
+
+
+            }else{
+            var singledate = new Date(this.getView().byId("podate")._oInput.getValue().split("(")[1].split(")")[0]);
+
+           
+             this.date =  oDateFormat.format(singledate);
+ this.status = "A";
+
+   this.fetchPOs();
+            }
+        }
+
+   
+         
         },
+
+
+
+
+
+
+
+
+
+
         filterStatusOpen: function(){
             let oFilter = null;
 
