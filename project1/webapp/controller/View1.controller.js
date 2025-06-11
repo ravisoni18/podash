@@ -183,9 +183,9 @@ sap.ui.define([
                //     sap.m.MessageBox.show("Request submitted successfully");
                 }
             };
-            var data = { "Werks":this.salesorg, "Eindt":this.date, "Status":this.status}
-             that.getView().byId("table").setBusy(true);
-            xhr.send(JSON.stringify(data));
+            var data = { "Werks":this.salesorg, "Eindt":this.date, "Status":this.status} // payload
+                        that.getView().byId("table").setBusy(true);
+            xhr.send(JSON.stringify(data)); // send API
         },
 
 

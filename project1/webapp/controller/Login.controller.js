@@ -94,7 +94,7 @@ sap.ui.define([
                 prodSet.setProperty("/email", user);
               MessageBox.success("Successful Login")
               document.cookie = "isloggedin:true,email:"+user;
-              var oRouter = this.getOwnerComponent().getRouter();
+              var oRouter = this.getOwnerComponent().getRouter();// take them to the next page
                 oRouter.navTo("View1");
             }else{
                MessageBox.error("Failed Login")
